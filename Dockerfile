@@ -11,15 +11,21 @@ COPY settings.vscode.json /root/.vscode-remote/data/Machine/settings.json
 # Configure apt
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
-    && apt-get -y install --no-install-recommends apt-utils 2>&1
-
-# Verify git, needed tools installed
-RUN apt-get -y install git procps curl
-
-# Clean up
-RUN apt-get autoremove -y \
+    && apt-get -y install --no-install-recommends apt-utils 2>&1 \
+    # Install git, process tools, curl, zsh, locales
+    && apt-get -y install git procps curl zsh less locales \
+    # Clean up
+    && apt-get autoremove -y \
     && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
-ENV DEBIAN_FRONTEND=dialog
+    && rm -rf /var/lib/apt/lists/* \
+    # Add zh_CN locale support
+    && echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen \
+    && locale-gen
 
-	
+# Install Oh-My-Zsh
+RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# Replace aliyun maven mirror
+RUN sed -Ee "s/(<mirrors>)/\1\n    <mirror>\n      <id>alimaven<\/id>\n      <mirrorOf>central<\/mirrorOf>\n      <name>aliyun maven<\/name>\n      <url>http:\/\/maven.aliyun.com\/nexus\/content\/groups\/public\/<\/url>\n    <\/mirror>/" -i /usr/share/maven/conf/settings.xml
+
+ENV DEBIAN_FRONTEND=dialog
