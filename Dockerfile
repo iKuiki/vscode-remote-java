@@ -12,8 +12,8 @@ COPY settings.vscode.json /root/.vscode-remote/data/Machine/settings.json
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils 2>&1 \
-    # Install git, process tools, curl, zsh, locales, git-flow
-    && apt-get -y install git procps curl zsh less locales git-flow \
+    # Install git, process tools, curl, zsh, locales, git-flow vim
+    && apt-get -y install git procps curl zsh less locales git-flow vim \
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
