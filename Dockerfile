@@ -32,3 +32,6 @@ ENV DEBIAN_FRONTEND=dialog
 
 # Set time zone
 ENV TZ=Asia/Shanghai
+
+# Set the default shell to zsh rather than sh
+ENV SHELL /bin/zsh
