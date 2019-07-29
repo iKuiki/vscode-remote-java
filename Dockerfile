@@ -9,8 +9,13 @@ FROM maven:3.6-jdk-8
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils 2>&1 \
-    # Install git, process tools, lsb-release (common in install instructions for CLIs), zsh, locales, git-flow vim
+    #
+    # Install git, process tools, lsb-release (common in install instructions for CLIs), zsh, less, locales, git-flow vim
     && apt-get -y install git procps lsb-release zsh less locales git-flow vim \
+    #
+    # Allow for a consistant java home location for settings - image is changing over time
+    && if [ ! -d "/docker-java-home" ]; then ln -s "${JAVA_HOME}" /docker-java-home; fi \
+    #
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \

@@ -8,7 +8,7 @@
 
 - 通过apt多安装了zsh less locales git-flow vim这5个组件
 - 安装了oh-my-zsh
-- 将所有涉及apt的操作合为一句RUN以避免缓存文件出现在docker的层叠卷中
+- ~~将所有涉及apt的操作合为一句RUN以避免缓存文件出现在docker的层叠卷中~~ 官方已经将其合并为一
 - 生成了中文locale支持，在终端中中文的输入与输出都不会乱码了
 - maven源修改为aliyun的源
 - 时区设置为+0800
